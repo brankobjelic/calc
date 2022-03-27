@@ -113,7 +113,7 @@ namespace calc
             {
                 return;
             }
-            if (operationPressed) // nul the parameter if last was operation pressed (not number)
+            if (operationPressed) // nul the parameter if last was operation pressed (not number), CALC-22
             {
                 textBox_Result.Text = "0";
             }
