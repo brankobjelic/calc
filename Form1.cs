@@ -89,9 +89,7 @@ namespace calc
                 button_Equals.PerformClick();
                 operationPressed = true;
                 operationPerformed = button.Text;
-                //equation_label.Text = equation_label.Text + operationPerformed;
                 equation_label.Text = textBox_Result.Text + operationPerformed;
-                //button_Equals.PerformClick();
             }
             else
             {
@@ -118,7 +116,7 @@ namespace calc
         {
 
             hnum2 = textBox_Result.Text;
-            equation_label.Text = "";//!
+            equation_label.Text = "";
             switch (operationPerformed)
             {
                 case "+":
@@ -264,8 +262,6 @@ namespace calc
                 textBox_Result.Text = "-" + textBox_Result.Text;
             }
             plusMinusPerformed = true;
-            //result = 0;
-            //operationPressed = false; //???
             label1.Focus();
         }
 
