@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.equation_label = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button_MS = new System.Windows.Forms.Button();
             this.button_MR = new System.Windows.Forms.Button();
@@ -55,12 +56,15 @@
             this.button_7 = new System.Windows.Forms.Button();
             this.textBox_Result = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.SaddleBrown;
+            this.panel1.Controls.Add(this.equation_label);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.button_MS);
             this.panel1.Controls.Add(this.button_MR);
@@ -89,8 +93,18 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(230, 372);
+            this.panel1.Size = new System.Drawing.Size(239, 372);
             this.panel1.TabIndex = 0;
+            // 
+            // equation_label
+            // 
+            this.equation_label.Font = new System.Drawing.Font("Cascadia Code", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.equation_label.Location = new System.Drawing.Point(15, 15);
+            this.equation_label.Name = "equation_label";
+            this.equation_label.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.equation_label.Size = new System.Drawing.Size(197, 12);
+            this.equation_label.TabIndex = 27;
+            this.equation_label.Click += new System.EventHandler(this.equation_Click);
             // 
             // label2
             // 
@@ -394,12 +408,33 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "label1";
             // 
+            // listView1
+            // 
+            this.listView1.BackColor = System.Drawing.SystemColors.Window;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.listView1.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.listView1.FullRowSelect = true;
+            this.listView1.Location = new System.Drawing.Point(236, 0);
+            this.listView1.Name = "listView1";
+            this.listView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.listView1.Size = new System.Drawing.Size(177, 372);
+            this.listView1.TabIndex = 1;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "History";
+            this.columnHeader1.Width = 177;
+            // 
             // Form1
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(229, 370);
+            this.ClientSize = new System.Drawing.Size(411, 370);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Seven Segment", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -446,5 +481,8 @@
         private Button button_MR;
         private Button button_MC;
         private Label label2;
+        private Label equation_label;
+        private ListView listView1;
+        private ColumnHeader columnHeader1;
     }
 }

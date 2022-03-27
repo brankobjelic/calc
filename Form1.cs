@@ -8,7 +8,13 @@ namespace calc
         String operationPerformed = "";
         Boolean operationPressed = false;
         string memory = "0";
-        
+        Boolean plusMinusPerformed = false;
+        string hnum1, hnum2;
+        bool performClicked = false;
+        bool equalsclicked = false;
+
+        List<string> history = new List<string>();
+
         public Form1()
         {
             InitializeComponent();
@@ -17,22 +23,33 @@ namespace calc
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if ( textBox_Result.TextLength > 13)
+            try
             {
-                if (textBox_Result.Text.Contains('.')) {
-                    textBox_Result.Text = textBox_Result.Text.Remove(13);
-                } else               
+                if (textBox_Result.TextLength > 11)
+                {
+                    if (textBox_Result.Text.Contains('.'))
+                    {
+                        textBox_Result.Text = textBox_Result.Text.Remove(11);
+                    }
+                    else
+                        textBox_Result.Text = "Error";
+                }
+            }
+            catch (Exception)
+            {
+
                 textBox_Result.Text = "Error";
             }
+            
         }
 
         private void numclick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            if (textBox_Result.Text.Equals("0") || operationPressed  || textBox_Result.Text.Equals("Error"))
+            if (textBox_Result.Text.Equals("0")  || operationPressed    || textBox_Result.Text.Equals("Error"))
             {
                 textBox_Result.Text = "";
-
+                
                 operationPressed = false;
             }
             textBox_Result.Text = textBox_Result.Text + button.Text;
@@ -59,28 +76,36 @@ namespace calc
         {
             textBox_Result.Text = "0";
             result = 0;
+            equation_label.Text = "";
             label1.Focus();
         }
 
         private void operatorclick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            if (result != 0)
+            if (result != 0  && plusMinusPerformed == false  && operationPressed == false)
             {
+                performClicked = true;
                 button_Equals.PerformClick();
                 operationPressed = true;
                 operationPerformed = button.Text;
+                //equation_label.Text = equation_label.Text + operationPerformed;
+                equation_label.Text = textBox_Result.Text + operationPerformed;
+                //button_Equals.PerformClick();
             }
             else
             {
+
                 operationPerformed = button.Text;
 
                 result = Decimal.Parse(textBox_Result.Text, CultureInfo.InvariantCulture);
-
-
+                equation_label.Text = textBox_Result.Text + operationPerformed;
                 operationPressed = true;
-                label1.Focus();
+                
             }
+            hnum1 = equation_label.Text;
+            plusMinusPerformed = false;
+            label1.Focus();
         }
 
         private void ceclick(object sender, EventArgs e)
@@ -91,6 +116,9 @@ namespace calc
 
         private void equalsclick(object sender, EventArgs e)
         {
+
+            hnum2 = textBox_Result.Text;
+            equation_label.Text = "";//!
             switch (operationPerformed)
             {
                 case "+":
@@ -107,16 +135,45 @@ namespace calc
                     catch { textBox_Result.Text = "Error";
                     }
                     break;
+                default:
+                    break;
             }
             if (textBox_Result.Text != "Error")
             {
+                
+
                 textBox_Result.Text = result.ToString(CultureInfo.InvariantCulture);
+                
                 if (textBox_Result.Text.Contains('.'))               
                     textBox_Result.Text = textBox_Result.Text.TrimEnd('0');
-                operationPressed = true;//???
+                equation_label.Text = equation_label.Text + "=" + textBox_Result.Text;
+               
+  
+                    operationPressed = true;
+                  
+               if (!performClicked) { 
+                result = 0;
+
+               }
+                
+
+
             }
 
             operationPerformed = "";
+ 
+            history.Add(hnum1 + " " + hnum2 + " = " + textBox_Result.Text);
+            listView1.Items.Clear();
+            foreach (string equ in history)
+            {
+                listView1.Items.Add(equ);
+
+            }
+            listView1.Items[listView1.Items.Count - 1].Selected = true;
+            listView1.Items[listView1.Items.Count - 1].EnsureVisible();
+
+            performClicked = false;
+
             label1.Focus();
         }
 
@@ -206,8 +263,9 @@ namespace calc
             {
                 textBox_Result.Text = "-" + textBox_Result.Text;
             }
-
-            operationPressed = false; //???
+            plusMinusPerformed = true;
+            //result = 0;
+            //operationPressed = false; //???
             label1.Focus();
         }
 
@@ -233,18 +291,13 @@ namespace calc
             label1.Focus();
         }
 
-        private void button_MMinus_Click(object sender, EventArgs e)
-        {
-            if(memory != "")
-                memory = (decimal.Parse(memory) - decimal.Parse(textBox_Result.Text)).ToString();
-            label1.Focus();
-        }
 
-        private void button_MPlus_Click(object sender, EventArgs e)
+
+ 
+
+        private void equation_Click(object sender, EventArgs e)
         {
-            if (memory != "")
-                memory = (decimal.Parse(memory) + decimal.Parse(textBox_Result.Text)).ToString();
-            label1.Focus();
+
         }
     }
 }
