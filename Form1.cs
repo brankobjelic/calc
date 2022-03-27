@@ -18,7 +18,7 @@ namespace calc
         public Form1()
         {
             InitializeComponent();
-        }
+         }
 
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -83,24 +83,19 @@ namespace calc
         private void operatorclick(object sender, EventArgs e)
         {
             Button button = (Button)sender;
+            operationPerformed = button.Text;
             if (result != 0  && plusMinusPerformed == false  && operationPressed == false)
             {
                 performClicked = true;
                 button_Equals.PerformClick();
-                operationPressed = true;
-                operationPerformed = button.Text;
-                equation_label.Text = textBox_Result.Text + operationPerformed;
+                equation_label.Text = textBox_Result.Text + " "  + operationPerformed;
             }
             else
             {
-
-                operationPerformed = button.Text;
-
                 result = Decimal.Parse(textBox_Result.Text, CultureInfo.InvariantCulture);
-                equation_label.Text = textBox_Result.Text + operationPerformed;
-                operationPressed = true;
-                
+                equation_label.Text = textBox_Result.Text + " " + operationPerformed;
             }
+            operationPressed = true;
             hnum1 = equation_label.Text;
             plusMinusPerformed = false;
             label1.Focus();
@@ -114,6 +109,14 @@ namespace calc
 
         private void equalsclick(object sender, EventArgs e)
         {
+            if (operationPerformed == "") // disable double = pressing, CALC-21
+            {
+                return;
+            }
+            if (operationPressed) // nul the parameter if last was operation pressed (not number)
+            {
+                textBox_Result.Text = "0";
+            }
 
             hnum2 = textBox_Result.Text;
             equation_label.Text = "";
@@ -136,6 +139,7 @@ namespace calc
                 default:
                     break;
             }
+            operationPressed = false;
             if (textBox_Result.Text != "Error")
             {
                 
@@ -287,9 +291,10 @@ namespace calc
             label1.Focus();
         }
 
-
-
- 
+        private void listView1_SizeChanged(object sender, EventArgs e)
+        {
+            listView1.Columns[0].Width = listView1.ClientSize.Width; // auto size column
+        }
 
         private void equation_Click(object sender, EventArgs e)
         {
